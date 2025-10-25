@@ -9,7 +9,7 @@ const OrderManagement = () => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); // State để hiển thị Modal xác nhận xóa
     const [currentOrderId, setCurrentOrderId] = useState(null); // State để lưu id đơn hàng đang được xác nhận xóa
     const [productDetails, setProductDetails] = useState(null); // State để lưu thông tin chi tiết đơn hàng
-
+    const [order, setOrder] = useState([]);
     useEffect(() => {
         // Lấy đơn hàng từ API khi trang được render
         getOrders()
