@@ -6,10 +6,9 @@ import * as XLSX from "xlsx"; // Import thư viện xuất Excel
 const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); // State để hiển thị Modal xác nhận xóa
-  const [currentOrderId, setCurrentOrderId] = useState(null); // State để lưu id đơn hàng đang được xác nhận xóa
-  const [productDetails, setProductDetails] = useState(null); // State để lưu thông tin chi tiết đơn hàng
-  const [categories, setCategories] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [currentOrderId, setCurrentOrderId] = useState(null);
+  const [productDetails, setProductDetails] = useState(null);
   useEffect(() => {
     getOrders()
       .then((data) => setOrders(data))
