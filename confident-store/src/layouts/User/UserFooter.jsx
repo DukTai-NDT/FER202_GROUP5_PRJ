@@ -21,10 +21,6 @@ const UserFooter = () => {
           <Col md={3}>
             <h6 className="fw-bold">Our Story</h6>
             <p>
-              Our origin story is more of an origin statement. We wanted to
-              design what we wanted to wear – so we did.
-            </p>
-            <p>
               Since then, that philosophy has become more about the guy we
               design for and the impact he is looking to make.
             </p>
