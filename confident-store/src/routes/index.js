@@ -12,6 +12,9 @@ const routes = {
   products: "/products",
   orders: "/orders",
   notAuthorizedPage: "*", 
+  dashboard: "/dashboard",
+  users: "/users",
+  
   // notFound: "*", 
 };
 

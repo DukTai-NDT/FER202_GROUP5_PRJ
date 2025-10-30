@@ -15,6 +15,8 @@ import AdminLayout from "../layouts/Admin/AdminLayouts";
 import OrderManagement from "../pages/Admin/OrderManagement";
 import NotAuthorizedPage from "../pages/NotAuthorizePage";
 import PrivateRoute from "./privateRouter";
+import AdminPage from "../pages/Admin/AdminPage";
+import UserManagement from "../pages/Admin/UserManagement";
 
 const AppRouter = () => {
   return (
@@ -49,6 +51,16 @@ const AppRouter = () => {
               {/* Admin Layout to wrap dashboard and related routes */}
               <Routes>
                 <Route
+// Thêm 'index' để làm trang mặc định
+                  path={routes.dashboard}
+                  element={
+                    <PrivateRoute
+                      element={AdminPage} // Dùng AdminPage mới
+                      role="admin"
+                    ></PrivateRoute>
+                  }
+                />
+                <Route
                   path={routes.products}
                   element={
                     <PrivateRoute
@@ -62,6 +74,15 @@ const AppRouter = () => {
                   element={
                     <PrivateRoute
                       element={OrderManagement}
+                      role="admin"
+                    ></PrivateRoute>
+                  }
+                />
+                <Route
+                  path={routes.users}
+                  element={
+                    <PrivateRoute
+                      element={UserManagement}
                       role="admin"
                     ></PrivateRoute>
                   }
