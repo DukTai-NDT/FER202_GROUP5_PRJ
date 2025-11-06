@@ -24,7 +24,10 @@ export const addToCart = async (cartItem) => {
     );
 
     if (existingItem) {
-      const updatedItem = { ...existingItem, quantity: existingItem.quantity + 1 };
+      const updatedItem = {
+        ...existingItem,
+        quantity: existingItem.quantity + 1,
+      };
       await axios.put(`${CART_API_URL}/${existingItem.id}`, updatedItem);
       return updatedItem;
     } else {
@@ -39,7 +42,9 @@ export const addToCart = async (cartItem) => {
 
 export const updateCartItem = async (id, newQuantity) => {
   try {
-    const response = await axios.patch(`${CART_API_URL}/${id}`, { quantity: newQuantity });
+    const response = await axios.patch(`${CART_API_URL}/${id}`, {
+      quantity: newQuantity,
+    });
     return response.data;
   } catch (error) {
     console.error("Error updating cart item:", error);
@@ -60,13 +65,17 @@ export const checkout = async () => {
   try {
     // Lấy giỏ hàng
     const cartItems = await getCart();
-    if (cartItems.length === 0) return { success: false, message: "Your cart is empty!" };
+    if (cartItems.length === 0)
+      return { success: false, message: "Your cart is empty!" };
 
     // Tạo đơn hàng
     const order = {
       id: Date.now(), // Tạo ID tự động
       items: cartItems,
-      total: cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
+      total: cartItems.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      ),
       date: new Date().toISOString(),
       status: "Pending", // Trạng thái mặc định
     };
@@ -74,7 +83,9 @@ export const checkout = async () => {
     await axios.post(ORDER_API_URL, order);
 
     // Xóa giỏ hàng sau khi thanh toán thành công
-    await Promise.all(cartItems.map((item) => axios.delete(`${CART_API_URL}/${item.id}`)));
+    await Promise.all(
+      cartItems.map((item) => axios.delete(`${CART_API_URL}/${item.id}`))
+    );
 
     return { success: true, message: "Checkout successful!", order };
   } catch (error) {
@@ -84,21 +95,23 @@ export const checkout = async () => {
 };
 
 export const clearCart = async () => {
-    try {
-      const cartItems = await getCart();
-      await Promise.all(cartItems.map((item) => axios.delete(`${CART_API_URL}/${item.id}`)));
-    } catch (error) {
-      console.error("Error clearing cart:", error);
-    }
-  };
-  
+  try {
+    const cartItems = await getCart();
+    await Promise.all(
+      cartItems.map((item) => axios.delete(`${CART_API_URL}/${item.id}`))
+    );
+  } catch (error) {
+    console.error("Error clearing cart:", error);
+  }
+};
+
 export const placeOrder = async (orderData) => {
-    try {
-      const response = await axios.post(ORDER_API_URL, orderData);
-      await clearCart(); // Xóa giỏ hàng sau khi đặt hàng thành công
-      return response.data;
-    } catch (error) {
-      console.error("Error placing order:", error);
-      return null;
-    }
-  };
+  try {
+    const response = await axios.post(ORDER_API_URL, orderData);
+    await clearCart(); // Xóa giỏ hàng sau khi đặt hàng thành công
+    return response.data;
+  } catch (error) {
+    console.error("Error placing order:", error);
+    return null;
+  }
+};
