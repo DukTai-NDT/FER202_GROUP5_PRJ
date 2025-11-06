@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Card, Table } from "react-bootstrap";
-import { getCart, updateCartItem, removeCartItem } from "../../services/cartService";
+import {
+  getCart,
+  updateCartItem,
+  removeCartItem,
+} from "../../services/cartService";
 import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
@@ -23,38 +27,36 @@ const CartPage = () => {
       window.dispatchEvent(new Event("storage")); // Thông báo cập nhật
     }
   }, [cart]);
-  
 
   // CartPage.jsx
-const handleQuantityChange = async (id, newQuantity) => {
-  if (newQuantity < 1) return;
-  const updatedCart = await updateCartItem(id, newQuantity);
-  
-  // Cập nhật state cart
-  setCart((prevCart) => {
-    const newCart = prevCart.map((item) =>
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    );
-    // Lưu localStorage
-    localStorage.setItem("cart", JSON.stringify(newCart));
-    // Tự bắn sự kiện custom
-    window.dispatchEvent(new Event("cartChange"));
-    return newCart;
-  });
-};
+  const handleQuantityChange = async (id, newQuantity) => {
+    if (newQuantity < 1) return;
+    const updatedCart = await updateCartItem(id, newQuantity);
 
+    // Cập nhật state cart
+    setCart((prevCart) => {
+      const newCart = prevCart.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      );
+      // Lưu localStorage
+      localStorage.setItem("cart", JSON.stringify(newCart));
+      // Tự bắn sự kiện custom
+      window.dispatchEvent(new Event("cartChange"));
+      return newCart;
+    });
+  };
 
-const handleRemoveItem = async (id) => {
-  await removeCartItem(id);
-  setCart((prevCart) => {
-    const newCart = prevCart.filter((item) => item.id !== id);
-    // Lưu localStorage
-    localStorage.setItem("cart", JSON.stringify(newCart));
-    // Tự bắn sự kiện custom
-    window.dispatchEvent(new Event("cartChange"));
-    return newCart;
-  });
-};
+  const handleRemoveItem = async (id) => {
+    await removeCartItem(id);
+    setCart((prevCart) => {
+      const newCart = prevCart.filter((item) => item.id !== id);
+      // Lưu localStorage
+      localStorage.setItem("cart", JSON.stringify(newCart));
+      // Tự bắn sự kiện custom
+      window.dispatchEvent(new Event("cartChange"));
+      return newCart;
+    });
+  };
 
   return (
     <Container className="my-5">
@@ -89,7 +91,9 @@ const handleRemoveItem = async (id) => {
                   <Button
                     variant="outline-dark"
                     size="sm"
-                    onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                    onClick={() =>
+                      handleQuantityChange(item.id, item.quantity - 1)
+                    }
                   >
                     -
                   </Button>
@@ -97,14 +101,20 @@ const handleRemoveItem = async (id) => {
                   <Button
                     variant="outline-dark"
                     size="sm"
-                    onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                    onClick={() =>
+                      handleQuantityChange(item.id, item.quantity + 1)
+                    }
                   >
                     +
                   </Button>
                 </td>
                 <td>${item.price * item.quantity}</td>
                 <td>
-                  <Button variant="danger" size="sm" onClick={() => handleRemoveItem(item.id)}>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleRemoveItem(item.id)}
+                  >
                     X
                   </Button>
                 </td>
@@ -115,8 +125,18 @@ const handleRemoveItem = async (id) => {
       )}
       {cart.length > 0 && (
         <div className="text-end">
-          <h4>Total: ${cart.reduce((total, item) => total + item.price * item.quantity, 0)}</h4>
-          <Button variant="success" className="mt-3" onClick={() => navigate("/checkout")}>
+          <h4>
+            Total: $
+            {cart.reduce(
+              (total, item) => total + item.price * item.quantity,
+              0
+            )}
+          </h4>
+          <Button
+            variant="success"
+            className="mt-3"
+            onClick={() => navigate("/checkout")}
+          >
             Proceed to Checkout
           </Button>
         </div>
