@@ -19,7 +19,7 @@ const LoginPage = () => {
     setMessage(result.message);
     if (result.success) {
       if (result.user.role === "admin") {
-        setTimeout(() => navigate("/admin/products"), 2000);
+        setTimeout(() => navigate("/admin/dashboard"), 2000);
       } else {
         setTimeout(() => navigate("/"), 2000);
       }
@@ -56,7 +56,9 @@ const LoginPage = () => {
       <div style={formContainerStyle}>
         <h2 className="fw-bold text-center">Login</h2>
         {message && (
-          <Alert variant={message.includes("Invalid") ? "danger" : "success"}>
+          <Alert variant={message.includes("Invalid")? "danger" : "success"
+            || message.includes("locked")? "warning" : "success"
+          }>
             {message}
           </Alert>
         )}

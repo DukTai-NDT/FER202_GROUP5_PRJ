@@ -4,13 +4,18 @@
       "id": "1",
       "username": "admin",
       "password": "admin123",
-      "role": "admin"
+      "role": "admin",
+      "status": "active"
     },
     {
       "id": "2",
       "username": "user1",
-      "password": "user123",
-      "role": "user"
+      "fullName": "User",
+      "email": "123@gmail.com",
+      "phone": "987654321",
+      "address": "123",
+      "role": "user",
+      "status": "active"
     },
     {
       "id": "1740668900971",
@@ -19,7 +24,8 @@
       "email": "minh@gmail.com",
       "phone": "0123123123",
       "address": "Viet Nam",
-      "role": "user"
+      "role": "user",
+      "status": "active"
     },
     {
       "id": "1741021798605",
@@ -28,7 +34,8 @@
       "email": "hoainguyennam10@gmail.com",
       "phone": "0383451825",
       "address": "Hoalac",
-      "role": "user"
+      "role": "user",
+      "status": "active"
     },
     {
       "id": "1742979835453",
@@ -37,7 +44,8 @@
       "email": "namnhhe180895@fpt.edu.vn",
       "phone": "123456789",
       "address": "Hoalac",
-      "role": "user"
+      "role": "user",
+      "status": "locked"
     }
   ],
   "products": [
@@ -170,7 +178,7 @@
     },
     {
       "id": "4",
-      "name": "Abstract Print Shirt 41",
+      "name": "Print shirt New updated",
       "price": 99,
       "currency": "USD",
       "description": "Relaxed-fit shirt. Camp collar and short sleeves. Button-up front.",
@@ -437,6 +445,88 @@
         ]
       },
       "measurement_guide": "https://theproperlabel.us/products/the-proper-tee-shirt-classic-no-logo"
+    },
+    {
+      "id": "e43f",
+      "name": "Áo Sơ Mi Oxford",
+      "price": 29.99,
+      "description": "Áo sơ mi nam dài tay, vải oxford thoáng mát.",
+      "currency": "USD",
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colors": [
+        {
+          "name": "Trắng",
+          "hex": "#000000"
+        },
+        {
+          "name": "Xanh Da Trời",
+          "hex": "#000000"
+        }
+      ],
+      "images": {
+        "main": "https://example.com/images/shirt_main.jpg",
+        "gallery": []
+      }
+    },
+    {
+      "id": "e036",
+      "name": "Quần Tây Công Sở",
+      "price": 55,
+      "description": "Quần tây nam ống đứng, form dáng lịch lãm.",
+      "currency": "USD",
+      "sizes": [
+        "29",
+        "30",
+        "31",
+        "32",
+        "34"
+      ],
+      "colors": [
+        {
+          "name": "Đen",
+          "hex": "#000000"
+        },
+        {
+          "name": "Xám Đậm",
+          "hex": "#000000"
+        }
+      ],
+      "images": {
+        "main": "https://example.com/images/trousers_main.jpg",
+        "gallery": []
+      }
+    },
+    {
+      "id": "21fb",
+      "name": "Vớ Cổ Cao",
+      "price": 5.5,
+      "description": "Set 3 đôi vớ cổ cao, chất liệu cotton.",
+      "currency": "USD",
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        {
+          "name": "Trắng",
+          "hex": "#000000"
+        },
+        {
+          "name": "Đen",
+          "hex": "#000000"
+        },
+        {
+          "name": "Xám",
+          "hex": "#000000"
+        }
+      ],
+      "images": {
+        "main": "https://example.com/images/socks_main.jpg",
+        "gallery": []
+      }
     }
   ],
   "cart": [
@@ -731,7 +821,83 @@
       },
       "paymentMethod": "PayPal",
       "status": "Pending",
-      "date": "2025-11-05T19:09:36.473Z"
+
+      "date": "2025-10-14T01:41:34.543Z"
+    },
+    {
+      "id": "1761485543076",
+      "items": [
+        {
+          "id": "b983",
+          "productId": "1",
+          "name": "Acid Wash Graphic Crewneck T-Shirt A",
+          "price": "58",
+          "color": "Blue",
+          "size": "L",
+          "image": "https://i.postimg.cc/4NFPXKR6/Gemini-Generated-Image-8ij0xj8ij0xj8ij0.png",
+          "quantity": 5
+        },
+        {
+          "id": "fd21",
+          "productId": "21fb",
+          "name": "Vớ Cổ Cao",
+          "price": 5.5,
+          "color": "Xám",
+          "size": "Free size",
+          "image": "https://example.com/images/socks_main.jpg",
+          "quantity": 6
+        }
+      ],
+      "total": 323,
+      "customer": {
+        "name": "User",
+        "email": "123@gmail.com",
+        "address": "123",
+        "phone": "987654321"
+      },
+      "paymentMethod": "Bank Transfer",
+      "status": "Pending",
+      "date": "2025-10-26T13:32:23.076Z"
     }
-  ]
+  ],
+  "chatHistory": {
+    "messages": [
+      {
+        "role": "model",
+        "parts": "Chào bạn, tôi là trợ lý AI. Tôi có thể giúp gì?"
+      },
+      {
+        "role": "user",
+        "parts": "alo"
+      },
+      {
+        "role": "model",
+        "parts": "Đã xảy ra lỗi, không thể kết nối với AI."
+      },
+      {
+        "role": "user",
+        "parts": "tạo cho tôi 1file excel chứa thông tin sản phẩm có trong cửa hang"
+      },
+      {
+        "role": "model",
+        "parts": "Chào bạn,\n\nTuy tôi không thể tạo trực tiếp file Excel và gửi cho bạn, nhưng tôi có thể cung cấp cho bạn một cấu trúc file Excel hoàn chỉnh và chi tiết nhất để bạn có thể tự tạo một cách dễ dàng. Cấu trúc này được thiết kế để quản lý thông tin sản phẩm hiệu quả trong cửa hàng của bạn.\n\n**Cấu trúc file Excel sẽ gồm nhiều Sheet (trang tính) để dễ quản lý:**\n\n---\n\n### **Sheet 1: DANH SÁCH SẢN PHẨM (Product List)**\n\nĐây là sheet chính chứa tất cả thông tin chi tiết về từng sản phẩm.\n\n| STT | Tên Cột (Vietnamese) | Tên Cột (English) | Mô Tả | Định Dạng Dữ Liệu | Ghi Chú |\n|---|---|---|---|---|---|\n| 1 | **Mã SP** | Product ID | Mã định danh duy nhất cho sản phẩm (vd: SP001, SPBiaTiger). | Text | Rất quan trọng, mỗi sản phẩm phải có mã riêng biệt. |\n| 2 | **SKU** | SKU | Stock Keeping Unit - Mã vạch hoặc mã nội bộ dùng cho quản lý kho, quét mã. | Text | Tùy chọn, thường dùng cho sản phẩm có nhiều biến thể. |\n| 3 | **Tên Sản Phẩm** | Product Name | Tên đầy đủ của sản phẩm. | Text | Ví dụ: \"Bia Tiger Lon 330ml\", \"Áo Thun Nam Cotton Trắng\". |\n| 4 | **Mô Tả Ngắn** | Short Description | Mô tả tóm tắt về sản phẩm. | Text | Các đặc điểm nổi bật, công dụng chính. |\n| 5 | **Danh Mục** | Category | Phân loại sản phẩm (vd: Đồ Uống, Quần Áo, Thực Phẩm Tươi Sống). | Text | Nên dùng Data Validation (Liên kết đến Sheet \"DANH MỤC\") |\n| 6 | **Danh Mục Con** | Sub-Category | Phân loại chi tiết hơn (vd: Bia, Nước Ngọt, Áo Sơ Mi, Quần Jean). | Text | Tùy chọn, có thể dùng Data Validation. |\n| 7 | **Thương Hiệu** | Brand | Tên thương hiệu của sản phẩm (vd: Tiger, Uniqlo, Vinamilk). | Text | Nên dùng Data Validation (Liên kết đến Sheet \"THƯƠNG HIỆU\") |\n| 8 | **Đơn Vị Tính** | Unit of Measure | Đơn vị bán ra (vd: Lon, Chai, Cái, Kg, Hộp). | Text | |\n| 9 | **Giá Vốn** | Cost Price | Giá nhập sản phẩm từ nhà cung cấp. | Number (Currency) | |\n| 10 | **Giá Bán Lẻ** | Retail Price | Giá bán ra cho khách hàng. | Number (Currency) | |\n| 11 | **Giá Khuyến Mãi** | Promotional Price | Giá bán khi sản phẩm đang có chương trình khuyến mãi (để trống nếu không có). | Number (Currency) | |\n| 12 | **Thuế (%)** | Tax (%) | Phần trăm thuế áp dụng cho sản phẩm (ví dụ: 10%). | Number (Percentage) | Tùy theo ngành hàng/chính sách. |\n| 13 | **Tồn Kho Hiện Tại** | Current Stock | Số lượng sản phẩm còn lại trong kho. | Number (Whole Number) | Cập nhật thường xuyên. |\n| 14 | **Ngưỡng Tồn Kho Tối Thiểu** | Minimum Stock Level | Mức tồn kho cần đặt hàng thêm. | Number (Whole Number) | Giúp quản lý tồn kho hiệu quả. |\n| 15 | **Vị Trí Trong Cửa Hàng** | In-Store Location | Vị trí sản phẩm được trưng bày (vd: Kệ A1, Ngăn B2, Tủ Lạnh). | Text | |\n| 16 | **Nhà Cung Cấp** | Supplier | Tên nhà cung cấp sản phẩm. | Text | Nên dùng Data Validation (Liên kết đến Sheet \"NHÀ CUNG CẤP\") |\n| 17 | **Ngày Nhập Kho Gần Nhất** | Last Restock Date | Ngày sản phẩm được nhập kho lần gần nhất. | Date | |\n| 18 | **Ngày Hết Hạn** | Expiration Date | Ngày hết hạn của sản phẩm (nếu có). | Date | Quan trọng cho thực phẩm, dược phẩm. |\n| 19 | **Trạng Thái** | Status | Trạng thái sản phẩm (vd: Đang Bán, Ngừng Bán, Hết Hàng Tạm Thời). | Text | Có thể dùng Data Validation (Đang Bán, Ngừng Bán, Hết Hàng). |\n| 20 | **Hình Ảnh (Link)** | Image (Link) | Đường dẫn (URL) đến hình ảnh sản phẩm (nếu có). | Text | Giúp tham khảo hình ảnh nhanh chóng. |\n| 21 | **Ghi Chú** | Notes | Các ghi chú khác về sản phẩm. | Text | |\n\n---\n\n### **Sheet 2: DANH MỤC (Categories)**\n\nSheet này chứa danh sách các danh mục sản phẩm chính.\n\n| STT | Mã Danh Mục | Tên Danh Mục | Mô Tả |\n|---|---|---|---|\n| 1 | DM001 | Đồ Uống | Tất cả sản phẩm đồ uống. |\n| 2 | DM002 | Quần Áo | Tất cả sản phẩm quần áo. |\n| 3 | DM003 | Thực Phẩm Khô | Các loại thực phẩm đóng gói, khô. |\n| 4 | DM004 | Thực Phẩm Tươi Sống | Rau củ quả, thịt cá tươi. |\n| ... | ... | ... | ... |\n\n---\n\n### **Sheet 3: THƯƠNG HIỆU (Brands)**\n\nSheet này chứa danh sách các thương hiệu sản phẩm.\n\n| STT | Mã Thương Hiệu | Tên Thương Hiệu | Quốc Gia |\n|---|---|---|---|\n| 1 | TH001 | Tiger | Việt Nam |\n| 2 | TH002 | Uniqlo | Nhật Bản |\n| 3 | TH003 | Vinamilk | Việt Nam |\n| ... | ... | ... | ... |\n\n---\n\n### **Sheet 4: NHÀ CUNG CẤP (Suppliers)**\n\nSheet này chứa thông tin về các nhà cung cấp.\n\n| STT | Mã NCC | Tên Nhà Cung Cấp | Người Liên Hệ | Điện Thoại | Email | Địa Chỉ |\n|---|---|---|---|---|---|---|\n| 1 | NCC001 | Công ty Bia Sài Gòn | Nguyễn Văn A | 0901234567 | a.nguyen@saigonbeer.com | 123 Đường ABC, HCM |\n| 2 | NCC002 | Đại lý Thời trang X | Trần Thị B | 0987654321 | b.tran@fashionx.com | 456 Đường XYZ, Hà Nội |\n| ... | ... | ... | ... | ... | ... | ... |\n\n---\n\n### **Hướng dẫn sử dụng và mẹo Excel:**\n\n1.  **Tạo các Sheet:** Mở một file Excel mới và tạo 4 sheet với tên như trên.\n2.  **Điền tiêu đề cột:** Copy/paste các tiêu đề cột vào dòng đầu tiên của mỗi sheet.\n3.  **Data Validation (Rất Quan Trọng):**\n    *   Tại Sheet \"DANH SÁCH SẢN PHẨM\", đối với các cột như \"Danh Mục\", \"Thương Hiệu\", \"Nhà Cung Cấp\", bạn nên sử dụng **Data Validation** để tạo danh sách thả xuống. Điều này giúp tránh lỗi nhập liệu, đảm bảo tính nhất quán của dữ liệu.\n    *   **Cách làm:** Chọn cột cần áp dụng (ví dụ: cột \"Danh Mục\" trên sheet \"DANH SÁCH SẢN PHẨM\") -> tab **Data** -> **Data Validation** -> Chọn **List** trong mục \"Allow\" -> Tại mục \"Source\", chọn toàn bộ cột \"Tên Danh Mục\" trên sheet \"DANH MỤC\" (ví dụ: `='DANH MỤC'!$C$2:$C$100`). Làm tương tự cho Thương Hiệu và Nhà Cung Cấp.\n4.  **Định dạng dữ liệu:**\n    *   Cột giá tiền: Chọn cột, click chuột phải -> Format Cells -> Currency (Tiền tệ) -> Chọn VNĐ.\n    *   Cột ngày tháng: Chọn cột, click chuột phải -> Format Cells -> Date (Ngày).\n    *   Cột phần trăm: Chọn cột, click chuột phải -> Format Cells -> Percentage (Phần trăm).\n5.  **Tô màu hoặc dùng Conditional Formatting:**\n    *   Bạn có thể tô màu khác nhau cho các dòng sản phẩm có \"Tồn Kho Hiện Tại\" dưới \"Ngưỡng Tồn Kho Tối Thiểu\" để dễ dàng nhận biết sản phẩm cần nhập thêm.\n    *   **Cách làm:** Chọn cột \"Tồn Kho Hiện Tại\" -> tab **Home** -> **Conditional Formatting** -> **Highlight Cell Rules** -> **Less Than...** -> Nhập công thức so sánh với cột \"Ngưỡng Tồn Kho Tối Thiểu\" (ví dụ: `=$M2`) và chọn màu.\n6.  **Sử dụng bộ lọc (Filter) và sắp xếp (Sort):** Để dễ dàng tìm kiếm và phân tích dữ liệu.\n7.  **Lưu file thường xuyên:** Để tránh mất dữ liệu.\n\nChúc bạn thành công trong việc quản lý sản phẩm của mình!"
+      },
+      {
+        "role": "user",
+        "parts": "lấy tôi dữ liệu sản phẩm"
+      },
+      {
+        "role": "model",
+        "parts": "Dưới đây là dữ liệu sản phẩm có trong cửa hàng:\n\n*   **Acid Wash Graphic Crewneck T-Shirt A** (ID: 1) - Giá: 58 USD\n*   **Archive Logo Relaxed Crewneck T-Shirt** (ID: 2) - Giá: 39.5 USD\n*   **Abstract Print Shirt 3** (ID: 3) - Giá: 99 USD\n*   **Print shirt New updated** (ID: 4) - Giá: 99 USD\n*   **Abstract Print Shirt 6** (ID: 6) - Giá: 99 USD"
+      },
+      {
+        "role": "user",
+        "parts": "lấy tôi tất cả dữ liệu sản phẩm"
+      },
+      {
+        "role": "model",
+        "parts": "Dưới đây là tất cả dữ liệu sản phẩm có trong cửa hàng:\n\n*   **Mã SP:** 1, **Tên Sản Phẩm:** Acid Wash Graphic Crewneck T-Shirt A, **Giá:** 58 USD\n*   **Mã SP:** 2, **Tên Sản Phẩm:** Archive Logo Relaxed Crewneck T-Shirt, **Giá:** 39.5 USD\n*   **Mã SP:** 3, **Tên Sản Phẩm:** Abstract Print Shirt 3, **Giá:** 99 USD\n*   **Mã SP:** 4, **Tên Sản Phẩm:** Print shirt New updated, **Giá:** 99 USD\n*   **Mã SP:** 6, **Tên Sản Phẩm:** Abstract Print Shirt 6, **Giá:** 99 USD\n*   **Mã SP:** 7, **Tên Sản Phẩm:** Abstract Print Shirt 6, **Giá:** 99 USD\n*   **Mã SP:** 8, **Tên Sản Phẩm:** Abstract Print Shirt 6, **Giá:** 99 USD\n*   **Mã SP:** c1d1, **Tên Sản Phẩm:** Relaxed Varsity Logo T-Shirt, **Giá:** 591 USD\n*   **Mã SP:** 201c, **Tên Sản Phẩm:** Tech Knit Crewneck Sweater T-Shirt, **Giá:** 69.30 USD\n*   **Mã SP:** 05a2, **Tên Sản Phẩm:** Ao moi, **Giá:** 100 USD\n*   **Mã SP:** e43f, **Tên Sản Phẩm:** Áo Sơ Mi Oxford, **Giá:** 29.99 USD\n*   **Mã SP:** e036, **Tên Sản Phẩm:** Quần Tây Công Sở, **Giá:** 55 USD\n*   **Mã SP:** 21fb, **Tên Sản Phẩm:** Vớ Cổ Cao, **Giá:** 5.5 USD"
+      }
+    ]
+  }
 }

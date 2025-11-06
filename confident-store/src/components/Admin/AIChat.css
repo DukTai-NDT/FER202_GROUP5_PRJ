@@ -1,0 +1,70 @@
+/* Làm cho bong bóng chat của AI sử dụng toàn bộ không gian */
+.model-response {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Định dạng chung cho markdown */
+.model-response p {
+  margin-bottom: 0.5rem;
+}
+
+.model-response ul, .model-response ol {
+  padding-left: 20px;
+  margin-bottom: 0.5rem;
+}
+
+/* ĐÂY LÀ PHẦN THAY THẾ CHO SYNTAX HIGHLIGHTER
+  Định dạng cho khối code (thẻ <pre>)
+*/
+.model-response pre {
+  background-color: #2d2d2d; /* Nền đen/xám tối */
+  color: #f8f8f2; /* Chữ màu sáng */
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto; /* Cho phép cuộn ngang nếu code quá dài */
+  white-space: pre-wrap; /* Tự xuống hàng */
+  word-wrap: break-word;
+}
+
+/* Định dạng cho thẻ <code> bên trong <pre> */
+.model-response pre code {
+  font-family: "Courier New", Courier, monospace;
+  background-color: transparent; /* Không cần nền nữa */
+  color: inherit; /* Lấy màu chữ từ thẻ <pre> */
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Định dạng cho inline code (code nằm trong câu) */
+.model-response code {
+  background-color: #f0f0f0;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+  color: #333; /* Màu chữ tối cho nền sáng */
+}
+
+/* Định dạng cho bảng (Giữ nguyên, vì rất hữu ích) */
+.model-response table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border: 1px solid #ddd;
+}
+
+.model-response th, .model-response td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.model-response th {
+  background-color: #f2f2f2;
+}
+
+.model-response tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

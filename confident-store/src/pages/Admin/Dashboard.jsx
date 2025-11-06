@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Card, Modal, Form, Pagination } from "react-bootstrap";
-import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
+import { FaEdit, FaTrash, FaPlus,FaUpload } from "react-icons/fa";
 import ProductModal from "../../components/Admin/ProductModal";
 import DeleteConfirmModal from "../../components/Admin/DeleteModal";
-import { createProduct, updateProduct, deleteProduct } from "../../services/productService";
+import { createProduct, updateProduct, deleteProduct, bulkCreateProducts } from "../../services/productService";
 import { getProducts } from "../../services/storeService";
+import ImportProductsModal from "../../components/Admin/ImportProductModal";
+// Import component mới
+import ProductCardWithEditor from "../../components/Admin/ProductCardWithEditor"; 
 
-const Dashboard = () => {
+const ProductManagement = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
@@ -17,6 +20,8 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState(""); // New state for search query
   const [currentPage, setCurrentPage] = useState(1); // Current page
   const [productsPerPage] = useState(6); // Number of products per page
+  const [showImportModal, setShowImportModal] = useState(false);
+
 
   useEffect(() => {
     getProducts()
@@ -26,6 +31,37 @@ const Dashboard = () => {
       })
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
+
+  const handleInlineSave = async (productId, updatedData) => {
+    try {
+      const savedProduct = await updateProduct(productId, updatedData);
+      
+      // Cập nhật lại state chính
+      const updateList = (list) => 
+        list.map(p => (p.id === productId ? savedProduct : p));
+
+      setProducts(updateList);
+      setFilteredProducts(updateList);
+
+    } catch (error) {
+      console.error("Lỗi khi cập nhật inline:", error);
+      // Ném lỗi lại để component con có thể bắt và hiển thị
+      throw error;
+    }
+  };
+
+  const handleImportProducts = async (importedProducts) => {
+    try {
+      const newProducts = await bulkCreateProducts(importedProducts);
+      // Cập nhật state với sản phẩm mới
+      setProducts([...products, ...newProducts]);
+      setFilteredProducts([...filteredProducts, ...newProducts]);
+      setShowImportModal(false); // Đóng modal
+    } catch (error) {
+      console.error("Lỗi khi import sản phẩm:", error);
+      alert("Đã xảy ra lỗi khi import sản phẩm. Vui lòng thử lại.");
+    }
+  };
 
   const handleCreate = () => {
     setCurrentProduct(null);  // Clear the product data for add
@@ -64,7 +100,7 @@ const Dashboard = () => {
         products.map((product) => (product.id === currentProduct.id ? updatedProducts : product))
       );
       setFilteredProducts(
-        filteredProducts.map((product) => (product.id === currentProduct.id ? updatedProducts : product))
+        // filteredProducts.map((product) => (product.id === currentProduct.id ? updatedProducts : product))
       );
     } else {
       updatedProducts = await createProduct(formData);
@@ -114,29 +150,21 @@ const Dashboard = () => {
           <Button variant="success" onClick={handleCreate}>
             <FaPlus /> Add New Product
           </Button>
+          <Button variant="info" onClick={() => setShowImportModal(true)} className="me-2">
+            <FaUpload /> Import Products
+          </Button>
         </Col>
       </Row>
       <Row>
         {currentProducts.map((product) => (
           <Col md={4} key={product.id} className="mb-4">
-            <Card>
-              <Card.Img variant="top" style={{  objectFit: "cover" }} src={product.images.main} />
-              <Card.Body>
-                <Card.Title>{product.name}</Card.Title>
-                <Card.Text>{`${product.currency} ${product.price}`}</Card.Text>
-                <Button variant="primary" onClick={() => handleShowDetails(product)}>
-                  View Details
-                </Button>
-                <div className="mt-2">
-                  <Button variant="warning" onClick={() => handleUpdate(product)} className="me-2">
-                    <FaEdit /> Edit
-                  </Button>
-                  <Button variant="danger" onClick={() => handleDelete(product)}>
-                    <FaTrash /> Delete
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
+            {/* Sử dụng component mới thay vì <Card> cũ */}
+            <ProductCardWithEditor
+              product={product}
+              onSave={handleInlineSave}
+              onUpdate={handleUpdate}
+              onDelete={handleDelete} // Truyền hàm delete vào
+            />
           </Col>
         ))}
       </Row>
@@ -149,6 +177,15 @@ const Dashboard = () => {
           </Pagination.Item>
         ))}
       </Pagination>
+
+
+      {/* Import Product Modal */}
+      <ImportProductsModal
+        show={showImportModal}
+        handleClose={() => setShowImportModal(false)}
+        onImport={handleImportProducts}
+      />
+
 
       {/* Create/Update Product Modal */}
       <ProductModal
@@ -208,4 +245,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default ProductManagement;
