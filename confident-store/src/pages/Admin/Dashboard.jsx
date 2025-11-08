@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Card, Modal, Form, Pagination } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Card,
+  Modal,
+  Form,
+  Pagination,
+} from "react-bootstrap";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import ProductModal from "../../components/Admin/ProductModal";
 import DeleteConfirmModal from "../../components/Admin/DeleteModal";
-import { createProduct, updateProduct, deleteProduct } from "../../services/productService";
+import {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from "../../services/productService";
 import { getProducts } from "../../services/storeService";
 
 const Dashboard = () => {
@@ -17,7 +30,7 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState(""); // New state for search query
   const [currentPage, setCurrentPage] = useState(1); // Current page
   const [productsPerPage] = useState(6); // Number of products per page
-
+  const [categories, setCategory] = useState(null);
   useEffect(() => {
     getProducts()
       .then((data) => {
@@ -28,13 +41,13 @@ const Dashboard = () => {
   }, []);
 
   const handleCreate = () => {
-    setCurrentProduct(null);  // Clear the product data for add
-    setShowCreate(true);  // Show the create modal
+    setCurrentProduct(null); // Clear the product data for add
+    setShowCreate(true); // Show the create modal
   };
 
   const handleUpdate = (product) => {
     setCurrentProduct(product);
-    setShowCreate(true);  // Show the update modal
+    setShowCreate(true); // Show the update modal
   };
 
   const handleDelete = (product) => {
@@ -48,8 +61,12 @@ const Dashboard = () => {
   const handleDeleteConfirm = async () => {
     const result = await deleteProduct(currentProduct.id);
     if (result.success) {
-      setProducts(products.filter((product) => product.id !== currentProduct.id));
-      setFilteredProducts(filteredProducts.filter((product) => product.id !== currentProduct.id));
+      setProducts(
+        products.filter((product) => product.id !== currentProduct.id)
+      );
+      setFilteredProducts(
+        filteredProducts.filter((product) => product.id !== currentProduct.id)
+      );
     } else {
       alert(result.message);
     }
@@ -61,10 +78,14 @@ const Dashboard = () => {
     if (currentProduct) {
       updatedProducts = await updateProduct(currentProduct.id, formData);
       setProducts(
-        products.map((product) => (product.id === currentProduct.id ? updatedProducts : product))
+        products.map((product) =>
+          product.id === currentProduct.id ? updatedProducts : product
+        )
       );
       setFilteredProducts(
-        filteredProducts.map((product) => (product.id === currentProduct.id ? updatedProducts : product))
+        filteredProducts.map((product) =>
+          product.id === currentProduct.id ? updatedProducts : product
+        )
       );
     } else {
       updatedProducts = await createProduct(formData);
@@ -93,7 +114,10 @@ const Dashboard = () => {
   // Pagination
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -120,18 +144,32 @@ const Dashboard = () => {
         {currentProducts.map((product) => (
           <Col md={4} key={product.id} className="mb-4">
             <Card>
-              <Card.Img variant="top" style={{  objectFit: "cover" }} src={product.images.main} />
+              <Card.Img
+                variant="top"
+                style={{ objectFit: "cover" }}
+                src={product.images.main}
+              />
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
                 <Card.Text>{`${product.currency} ${product.price}`}</Card.Text>
-                <Button variant="primary" onClick={() => handleShowDetails(product)}>
+                <Button
+                  variant="primary"
+                  onClick={() => handleShowDetails(product)}
+                >
                   View Details
                 </Button>
                 <div className="mt-2">
-                  <Button variant="warning" onClick={() => handleUpdate(product)} className="me-2">
+                  <Button
+                    variant="warning"
+                    onClick={() => handleUpdate(product)}
+                    className="me-2"
+                  >
                     <FaEdit /> Edit
                   </Button>
-                  <Button variant="danger" onClick={() => handleDelete(product)}>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(product)}
+                  >
                     <FaTrash /> Delete
                   </Button>
                 </div>
@@ -144,7 +182,11 @@ const Dashboard = () => {
       {/* Pagination */}
       <Pagination>
         {[...Array(totalPages).keys()].map((number) => (
-          <Pagination.Item key={number} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
+          <Pagination.Item
+            key={number}
+            active={number + 1 === currentPage}
+            onClick={() => paginate(number + 1)}
+          >
             {number + 1}
           </Pagination.Item>
         ))}
@@ -174,7 +216,9 @@ const Dashboard = () => {
         <Modal.Body>
           <h5>Description</h5>
           <p>{productDetails?.description}</p>
-          <h6>Price: {productDetails?.currency} {productDetails?.price}</h6>
+          <h6>
+            Price: {productDetails?.currency} {productDetails?.price}
+          </h6>
           <h6>Sizes: {productDetails?.sizes.join(", ")}</h6>
           <h6>Colors:</h6>
           <div>
@@ -194,7 +238,12 @@ const Dashboard = () => {
           <h6>Images:</h6>
           <div>
             {productDetails?.images.gallery.map((image, index) => (
-              <img key={index} src={image} alt="Product" style={{ width: "100%", marginBottom: "10px" }} />
+              <img
+                key={index}
+                src={image}
+                alt="Product"
+                style={{ width: "100%", marginBottom: "10px" }}
+              />
             ))}
           </div>
         </Modal.Body>
