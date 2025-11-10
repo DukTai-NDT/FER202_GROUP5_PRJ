@@ -1,5 +1,5 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { FaUser, FaSearch, FaShoppingBasket } from "react-icons/fa";
+import { FaUser, FaSearch, FaShoppingBasket, FaSignInAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -39,7 +39,8 @@ const UserHeader = () => {
         <Navbar.Collapse id="navbar-nav" className="justify-content-center">
           <Nav className="gap-4">
             <Nav.Link href="/store" style={styles.navLink}>Shop</Nav.Link>
-            <Nav.Link href="/archive-sale" style={styles.navLink}>Archive Sale</Nav.Link>
+            {/* Xóa Archive Sale layouts/User/UserHeader */}
+            {/* <Nav.Link href="/archive-sale" style={styles.navLink}>Archive Sale</Nav.Link> */}
             <Nav.Link href="/aboutus" style={styles.navLink}>About Us</Nav.Link>
             <Nav.Link href="/coming-soon" style={styles.navLink}>Coming Soon</Nav.Link>
           </Nav>
@@ -47,10 +48,17 @@ const UserHeader = () => {
 
         {/* Right Icons */}
         <div className="d-flex align-items-center gap-4">
-          
+
           {/* Conditional rendering of Login or Full Name */}
           {!currentUser ? (
-            <a href="/login" style={{ textDecoration: "none" }}><span style={styles.navLink}>Login</span></a>
+            <a href="/login" style={{ textDecoration: "none" }}>
+              <span style={styles.navLink}>
+                {/* Thêm icon vào đây */}
+                <FaSignInAlt size={18} style={styles.icon} />
+                {' '} {/* Thêm một khoảng trắng */}
+                Login
+              </span>
+            </a>
           ) : (
 
             <span style={styles.navLink}><a href="/profile" style={{ textDecoration: "none" }}>{currentUser.fullName}</a></span>
