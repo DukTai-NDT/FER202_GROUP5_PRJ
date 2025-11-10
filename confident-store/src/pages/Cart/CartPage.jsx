@@ -85,7 +85,7 @@ const CartPage = () => {
                 <td>
                   <p className="mb-1 fw-bold">{item.name}</p>
                   <p className="mb-1">Size: {item.size}</p>
-                  <p className="mb-1">Color: {item.color}</p>
+                  <p className="mb-1">Color: {item.color.name}</p>
                 </td>
                 <td>
                   <Button
