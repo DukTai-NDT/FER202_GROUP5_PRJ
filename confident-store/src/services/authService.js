@@ -42,10 +42,15 @@ export const login = async (username, password) => {
     const { data: users } = await axios.get(API_URL, {
       params: { username, password },
     });
-    if (users.length === 0)
+    if (users.length === 0) {
       return { success: false, message: "Invalid username or password!" };
+    }
 
     const user = users[0];
+    if (user.status === "locked") {
+      return { success: false, message: "Your account is locked. Please contact admin." };
+    }
+    
     localStorage.setItem("user", JSON.stringify(user)); // Lưu user vào localStorage
     return { success: true, user };
   } catch (error) {

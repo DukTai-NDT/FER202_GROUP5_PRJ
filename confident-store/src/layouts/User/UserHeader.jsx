@@ -47,6 +47,7 @@ const UserHeader = () => {
 
         {/* Right Icons */}
         <div className="d-flex align-items-center gap-4">
+          
           {/* Conditional rendering of Login or Full Name */}
           {!currentUser ? (
             <a href="/login" style={{ textDecoration: "none" }}><span style={styles.navLink}>Login</span></a>
