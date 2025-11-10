@@ -11,7 +11,10 @@ const UserHeader = () => {
     // Hàm cập nhật cartCount
     const updateCartCount = () => {
       const cartData = JSON.parse(localStorage.getItem("cart")) || [];
-      const totalQuantity = cartData.reduce((sum, item) => sum + item.quantity, 0);
+      const totalQuantity = cartData.reduce(
+        (sum, item) => sum + item.quantity,
+        0
+      );
       setCartCount(totalQuantity);
     };
 
@@ -38,11 +41,17 @@ const UserHeader = () => {
         <Navbar.Toggle aria-controls="navbar-nav" className="border-0" />
         <Navbar.Collapse id="navbar-nav" className="justify-content-center">
           <Nav className="gap-4">
-            <Nav.Link href="/store" style={styles.navLink}>Shop</Nav.Link>
-            {/* Xóa Archive Sale layouts/User/UserHeader */}
-            {/* <Nav.Link href="/archive-sale" style={styles.navLink}>Archive Sale</Nav.Link> */}
-            <Nav.Link href="/aboutus" style={styles.navLink}>About Us</Nav.Link>
-            <Nav.Link href="/coming-soon" style={styles.navLink}>Coming Soon</Nav.Link>
+
+            <Nav.Link href="/store" style={styles.navLink}>
+              Shop
+            </Nav.Link>
+            <Nav.Link href="/aboutus" style={styles.navLink}>
+              About Us
+            </Nav.Link>
+            <Nav.Link href="/coming-soon" style={styles.navLink}>
+              Coming Soon
+            </Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
 
@@ -52,16 +61,21 @@ const UserHeader = () => {
           {/* Conditional rendering of Login or Full Name */}
           {!currentUser ? (
             <a href="/login" style={{ textDecoration: "none" }}>
+
               <span style={styles.navLink}>
                 {/* Thêm icon vào đây */}
                 <FaSignInAlt size={18} style={styles.icon} />
                 {' '} {/* Thêm một khoảng trắng */}
                 Login
               </span>
+
             </a>
           ) : (
-
-            <span style={styles.navLink}><a href="/profile" style={{ textDecoration: "none" }}>{currentUser.fullName}</a></span>
+            <span style={styles.navLink}>
+              <a href="/profile" style={{ textDecoration: "none" }}>
+                {currentUser.fullName}
+              </a>
+            </span>
           )}
           <FaSearch size={18} style={styles.icon} />
           <div className="position-relative">
@@ -80,7 +94,7 @@ const UserHeader = () => {
 const styles = {
   navbar: {
     padding: "15px 0",
-    color: 'black',
+    color: "black",
   },
   navLink: {
     color: "black",

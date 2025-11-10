@@ -4,6 +4,7 @@ import { getOrders, deleteOrder } from "../../services/orderService";
 import * as XLSX from "xlsx"; // Import thư viện xuất Excel
 
 const OrderManagement = () => {
+
     const [orders, setOrders] = useState([]);
     const [showDetails, setShowDetails] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); // State để hiển thị Modal xác nhận xóa
@@ -62,118 +63,137 @@ const OrderManagement = () => {
                 console.error("Error deleting order:", error);
                 alert("Error deleting order");
             }
+
         }
-    };
+      } catch (error) {
+        console.error("Error deleting order:", error);
+        alert("Error deleting order");
+      }
+    }
+  };
 
-    // Mở Modal xác nhận xóa
-    const handleDeleteConfirm = (orderId) => {
-        setCurrentOrderId(orderId); // Lưu ID đơn hàng đang xác nhận
-        setShowDeleteConfirm(true);  // Hiển thị Modal xác nhận xóa
-    };
+  // Mở Modal xác nhận xóa
+  const handleDeleteConfirm = (orderId) => {
+    setCurrentOrderId(orderId); // Lưu ID đơn hàng đang xác nhận
+    setShowDeleteConfirm(true); // Hiển thị Modal xác nhận xóa
+  };
 
-    const handleShowDetails = (order) => {
-        setProductDetails(order);  // Cập nhật chi tiết đơn hàng vào state
-        setShowDetails(true);  // Mở modal để hiển thị chi tiết
-    };
+  const handleShowDetails = (order) => {
+    setProductDetails(order); // Cập nhật chi tiết đơn hàng vào state
+    setShowDetails(true); // Mở modal để hiển thị chi tiết
+  };
 
-    return (
-        <div>
-            <h2>Order Management</h2>
-            <Button variant="success" className="mb-3" onClick={handleExportExcel}>
-                Export to Excel
-            </Button>
+  return (
+    <div>
+      <h2>Order Management</h2>
+      <Button variant="success" className="mb-3" onClick={handleExportExcel}>
+        Export to Excel
+      </Button>
 
-            <Table striped bordered hover responsive>
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer Name</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {orders.map((order) => (
-                        <tr key={order.id}>
-                            <td>{order.id}</td>
-                            <td>{order.customer.name}</td>
-                            <td>{`${order.total} ${order.currency || 'USD'}`}</td>
-                            <td>{order.status}</td>
-                            <td>{new Date(order.date).toLocaleString()}</td>
-                            <td>
-                                <Button variant="info" onClick={() => handleShowDetails(order)} className="me-2">View</Button>
-                                <Button variant="danger" onClick={() => handleDeleteConfirm(order.id)}>
-                                    Delete
-                                </Button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+      <Table striped bordered hover responsive>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.map((order) => (
+            <tr key={order.id}>
+              <td>{order.id}</td>
+              <td>{order.customer.name}</td>
+              <td>{`${order.total} ${order.currency || "USD"}`}</td>
+              <td>{order.status}</td>
+              <td>{new Date(order.date).toLocaleString()}</td>
+              <td>
+                <Button
+                  variant="info"
+                  onClick={() => handleShowDetails(order)}
+                  className="me-2"
+                >
+                  View
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => handleDeleteConfirm(order.id)}
+                >
+                  Delete
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
 
-            {/* Modal Hiển thị chi tiết đơn hàng */}
-            <Modal show={showDetails} onHide={() => setShowDetails(false)} size="lg">
-                <Modal.Header closeButton>
-                    <Modal.Title>Order Details</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {productDetails && (
-                        <>
-                            <h5>Customer Information</h5>
-                            <p>Name: {productDetails.customer.name}</p>
-                            <p>Email: {productDetails.customer.email}</p>
-                            <p>Phone: {productDetails.customer.phone}</p>
-                            <p>Address: {productDetails.customer.address}</p>
+      {/* Modal Hiển thị chi tiết đơn hàng */}
+      <Modal show={showDetails} onHide={() => setShowDetails(false)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Order Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {productDetails && (
+            <>
+              <h5>Customer Information</h5>
+              <p>Name: {productDetails.customer.name}</p>
+              <p>Email: {productDetails.customer.email}</p>
+              <p>Phone: {productDetails.customer.phone}</p>
+              <p>Address: {productDetails.customer.address}</p>
 
-                            <h6>Items:</h6>
-                            <Row>
-                                {productDetails.items.map((item) => (
-                                    <Col md={4} key={item.id}>
-                                        <Card>
-                                            <Card.Img variant="top" src={item.image} />
-                                            <Card.Body>
-                                                <Card.Title>{item.name}</Card.Title>
-                                                <Card.Text>
-                                                    Size: {item.size}, Color: {item.color} <br />
-                                                    Quantity: {item.quantity} <br />
-                                                    Price: ${item.price * item.quantity}
-                                                </Card.Text>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                ))}
-                            </Row>
-                        </>
-                    )}
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDetails(false)}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+              <h6>Items:</h6>
+              <Row>
+                {productDetails.items.map((item) => (
+                  <Col md={4} key={item.id}>
+                    <Card>
+                      <Card.Img variant="top" src={item.image} />
+                      <Card.Body>
+                        <Card.Title>{item.name}</Card.Title>
+                        <Card.Text>
+                          Size: {item.size}, Color: {item.color} <br />
+                          Quantity: {item.quantity} <br />
+                          Price: ${item.price * item.quantity}
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDetails(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-            {/* Modal Xác nhận xóa */}
-            <Modal show={showDeleteConfirm} onHide={() => setShowDeleteConfirm(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirm Delete</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    Are you sure you want to delete this order?
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDeleteConfirm(false)}>
-                        Cancel
-                    </Button>
-                    <Button variant="danger" onClick={handleDelete}>
-                        Delete
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>
-    );
+      {/* Modal Xác nhận xóa */}
+      <Modal
+        show={showDeleteConfirm}
+        onHide={() => setShowDeleteConfirm(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this order?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirm(false)}
+          >
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
 };
 
 export default OrderManagement;

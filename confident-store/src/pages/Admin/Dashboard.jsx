@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+
 import { Container, Row, Col, Button, Card, Modal, Form, Pagination } from "react-bootstrap";
 import { FaEdit, FaTrash, FaPlus,FaUpload } from "react-icons/fa";
 import ProductModal from "../../components/Admin/ProductModal";
 import DeleteConfirmModal from "../../components/Admin/DeleteModal";
 import { createProduct, updateProduct, deleteProduct, bulkCreateProducts } from "../../services/productService";
+
 import { getProducts } from "../../services/storeService";
 import ImportProductsModal from "../../components/Admin/ImportProductModal";
 // Import component mới
@@ -20,8 +22,8 @@ const ProductManagement = () => {
   const [searchQuery, setSearchQuery] = useState(""); // New state for search query
   const [currentPage, setCurrentPage] = useState(1); // Current page
   const [productsPerPage] = useState(6); // Number of products per page
-  const [showImportModal, setShowImportModal] = useState(false);
 
+  const [showImportModal, setShowImportModal] = useState(false);
 
   useEffect(() => {
     getProducts()
@@ -64,13 +66,13 @@ const ProductManagement = () => {
   };
 
   const handleCreate = () => {
-    setCurrentProduct(null);  // Clear the product data for add
-    setShowCreate(true);  // Show the create modal
+    setCurrentProduct(null); // Clear the product data for add
+    setShowCreate(true); // Show the create modal
   };
 
   const handleUpdate = (product) => {
     setCurrentProduct(product);
-    setShowCreate(true);  // Show the update modal
+    setShowCreate(true); // Show the update modal
   };
 
   const handleDelete = (product) => {
@@ -84,8 +86,12 @@ const ProductManagement = () => {
   const handleDeleteConfirm = async () => {
     const result = await deleteProduct(currentProduct.id);
     if (result.success) {
-      setProducts(products.filter((product) => product.id !== currentProduct.id));
-      setFilteredProducts(filteredProducts.filter((product) => product.id !== currentProduct.id));
+      setProducts(
+        products.filter((product) => product.id !== currentProduct.id)
+      );
+      setFilteredProducts(
+        filteredProducts.filter((product) => product.id !== currentProduct.id)
+      );
     } else {
       alert(result.message);
     }
@@ -97,10 +103,16 @@ const ProductManagement = () => {
     if (currentProduct) {
       updatedProducts = await updateProduct(currentProduct.id, formData);
       setProducts(
-        products.map((product) => (product.id === currentProduct.id ? updatedProducts : product))
+        products.map((product) =>
+          product.id === currentProduct.id ? updatedProducts : product
+        )
       );
       setFilteredProducts(
-        // filteredProducts.map((product) => (product.id === currentProduct.id ? updatedProducts : product))
+
+        filteredProducts.map((product) =>
+          product.id === currentProduct.id ? updatedProducts : product
+        )
+
       );
     } else {
       updatedProducts = await createProduct(formData);
@@ -129,7 +141,10 @@ const ProductManagement = () => {
   // Pagination
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -158,6 +173,7 @@ const ProductManagement = () => {
       <Row>
         {currentProducts.map((product) => (
           <Col md={4} key={product.id} className="mb-4">
+
             {/* Sử dụng component mới thay vì <Card> cũ */}
             <ProductCardWithEditor
               product={product}
@@ -165,6 +181,7 @@ const ProductManagement = () => {
               onUpdate={handleUpdate}
               onDelete={handleDelete} // Truyền hàm delete vào
             />
+
           </Col>
         ))}
       </Row>
@@ -172,7 +189,11 @@ const ProductManagement = () => {
       {/* Pagination */}
       <Pagination>
         {[...Array(totalPages).keys()].map((number) => (
-          <Pagination.Item key={number} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
+          <Pagination.Item
+            key={number}
+            active={number + 1 === currentPage}
+            onClick={() => paginate(number + 1)}
+          >
             {number + 1}
           </Pagination.Item>
         ))}
@@ -211,7 +232,9 @@ const ProductManagement = () => {
         <Modal.Body>
           <h5>Description</h5>
           <p>{productDetails?.description}</p>
-          <h6>Price: {productDetails?.currency} {productDetails?.price}</h6>
+          <h6>
+            Price: {productDetails?.currency} {productDetails?.price}
+          </h6>
           <h6>Sizes: {productDetails?.sizes.join(", ")}</h6>
           <h6>Colors:</h6>
           <div>
@@ -231,7 +254,12 @@ const ProductManagement = () => {
           <h6>Images:</h6>
           <div>
             {productDetails?.images.gallery.map((image, index) => (
-              <img key={index} src={image} alt="Product" style={{ width: "100%", marginBottom: "10px" }} />
+              <img
+                key={index}
+                src={image}
+                alt="Product"
+                style={{ width: "100%", marginBottom: "10px" }}
+              />
             ))}
           </div>
         </Modal.Body>
