@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Form, Button, Alert, Modal } from "react-bootstrap";
+import { Container, Row, Col, Form, Button,  Modal } from "react-bootstrap";
 import { getCart, placeOrder } from "../../services/cartService";
 
 const CheckoutPage = () => {
@@ -129,7 +129,7 @@ const CheckoutPage = () => {
                     <h4 className="fw-bold">Order Summary</h4>
                     {cart.map((item) => (
                         <div key={item.id} className="d-flex justify-content-between border-bottom py-2">
-                            <span>{item.name} ({item.size}, {item.color})</span>
+                            <span>{item.name} ({item.size}, {item.color.name})</span>
                             <span>${item.price * item.quantity}</span>
                         </div>
                     ))}

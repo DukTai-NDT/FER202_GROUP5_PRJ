@@ -531,64 +531,7 @@
       }
     }
   ],
-  "cart": [
-    {
-      "id": "0060",
-      "productId": "1",
-      "name": "Acid Wash Graphic Crewneck T-Shirt A",
-      "price": "58",
-      "color": "White",
-      "size": "2X",
-      "image": "https://i.postimg.cc/4NFPXKR6/Gemini-Generated-Image-8ij0xj8ij0xj8ij0.png",
-      "quantity": 1
-    },
-    {
-      "id": "0070",
-      "productId": "3",
-      "name": "Abstract Print Shirt 3",
-      "price": 99,
-      "color": {
-        "name": "Blue",
-        "hex": "#A7B6E0"
-      },
-      "size": "XL",
-      "image": "https://i.postimg.cc/K4XH7GFH/Se6574aa6efb54c529cd76e870f86e5757-2da6a04c-84e1-4d41-b8c5-0cc6f2a085f3.webp",
-      "quantity": 1
-    },
-    {
-      "id": "3-2X-Green",
-      "productId": "3",
-      "name": "Abstract Print Shirt 3",
-      "price": 99,
-      "image": "https://i.postimg.cc/K4XH7GFH/Se6574aa6efb54c529cd76e870f86e5757-2da6a04c-84e1-4d41-b8c5-0cc6f2a085f3.webp",
-      "size": "2X",
-      "color": {
-        "name": "Green",
-        "hex": "#3D665F"
-      },
-      "quantity": 1
-    },
-    {
-      "id": "0040",
-      "productId": "6",
-      "name": "Abstract Print Shirt 6",
-      "price": 99,
-      "color": "Green",
-      "size": "XS",
-      "image": "https://i.postimg.cc/JnxTDNdB/Gemini-Generated-Image-m1zuiem1zuiem1zu.png",
-      "quantity": 1
-    },
-    {
-      "id": "3c10",
-      "productId": "2",
-      "name": "Archive Logo Relaxed Crewneck T-Shirt",
-      "price": 39.5,
-      "color": "Green",
-      "size": "M",
-      "image": "https://i.postimg.cc/1X9Hdj7G/Screenshot-2024-11-07-130511.png",
-      "quantity": 1
-    }
-  ],
+  "cart": [],
   "orders": [
     {
       "id": "1740669418640",
@@ -869,6 +812,77 @@
       "paymentMethod": "Bank Transfer",
       "status": "Pending",
       "date": "2025-10-26T13:32:23.076Z"
+    },
+    {
+      "id": "1762783643686",
+      "items": [
+        {
+          "id": "0060",
+          "productId": "1",
+          "name": "Acid Wash Graphic Crewneck T-Shirt A",
+          "price": "58",
+          "color": "White",
+          "size": "2X",
+          "image": "https://i.postimg.cc/4NFPXKR6/Gemini-Generated-Image-8ij0xj8ij0xj8ij0.png",
+          "quantity": 1
+        },
+        {
+          "id": "0070",
+          "productId": "3",
+          "name": "Abstract Print Shirt 3",
+          "price": 99,
+          "color": {
+            "name": "Blue",
+            "hex": "#A7B6E0"
+          },
+          "size": "XL",
+          "image": "https://i.postimg.cc/K4XH7GFH/Se6574aa6efb54c529cd76e870f86e5757-2da6a04c-84e1-4d41-b8c5-0cc6f2a085f3.webp",
+          "quantity": 1
+        },
+        {
+          "id": "3-2X-Green",
+          "productId": "3",
+          "name": "Abstract Print Shirt 3",
+          "price": 99,
+          "image": "https://i.postimg.cc/K4XH7GFH/Se6574aa6efb54c529cd76e870f86e5757-2da6a04c-84e1-4d41-b8c5-0cc6f2a085f3.webp",
+          "size": "2X",
+          "color": {
+            "name": "Green",
+            "hex": "#3D665F"
+          },
+          "quantity": 1
+        },
+        {
+          "id": "0040",
+          "productId": "6",
+          "name": "Abstract Print Shirt 6",
+          "price": 99,
+          "color": "Green",
+          "size": "XS",
+          "image": "https://i.postimg.cc/JnxTDNdB/Gemini-Generated-Image-m1zuiem1zuiem1zu.png",
+          "quantity": 1
+        },
+        {
+          "id": "3c10",
+          "productId": "2",
+          "name": "Archive Logo Relaxed Crewneck T-Shirt",
+          "price": 39.5,
+          "color": "Green",
+          "size": "M",
+          "image": "https://i.postimg.cc/1X9Hdj7G/Screenshot-2024-11-07-130511.png",
+          "quantity": 1
+        }
+      ],
+      "total": 394.5,
+      "customer": {
+        "name": "User",
+        "email": "123@gmail.com",
+        "address": "123",
+        "phone": "987654321"
+      },
+      "paymentMethod": "PayPal",
+      "status": "Pending",
+      "date": "2025-11-10T14:07:23.686Z"
     }
   ],
   "chatHistory": {

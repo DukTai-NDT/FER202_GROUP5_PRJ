@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Container, Card } from "react-bootstrap";
 import Slider from "react-slick"; // Import React Slick
 import { getProducts } from "../../../services/productService";
-
+import {Link} from 'react-router-dom'
 const MAX_PRODUCTS = 6; // Total items available
 
 const ProductList = () => {
@@ -32,14 +32,23 @@ const ProductList = () => {
         <Container>
             <h2 className="fw-bold mt-4">NEW THIS WEEK</h2>
             <Slider {...settings}>
-                {products.map((product,index) => (
-                    <div key={index} className="px-2">
-                        <Card className="border-0 text-center">
-                            <Card.Img variant="top"  src={product.image} />
+                {products.map((product) => (
+                    <div key={product.id} className="px-2">
+                        <Card
+                            className="border-0 text-center"
+                            style={{ cursor: "pointer" }}
+                            // onClick={() => window.location.href = `/product/${product.id}`}
+                        >
+                            <Link
+                    to={`/product/${product.id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                            <Card.Img variant="top" src={product.image} />
                             <Card.Body>
                                 <Card.Title>{product.name}</Card.Title>
                                 <Card.Text className="fw-bold">${product.price}</Card.Text>
                             </Card.Body>
+                            </Link>
                         </Card>
                     </div>
                 ))}

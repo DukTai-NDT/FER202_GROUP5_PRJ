@@ -34,7 +34,7 @@ const Banner = ({ imageUrl }) => {
         <p style={{ fontSize: "16px", opacity: 0.9 }}>
           Sport pride, strong experience
         </p>
-        <Button variant="light" className="px-4 py-2 fw-bold">
+        <Button variant="light" className="px-4 py-2 fw-bold" href="/store">
           Explore the Drop
         </Button>
       </Container>

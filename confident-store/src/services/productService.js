@@ -20,10 +20,13 @@ export const getProducts = async (page = 1) => {
       return [];
     }
 
-    return response.data.map(({ name, price, images }) => ({
+    // Return id and images so UI can link to product detail and show the main image
+    return response.data.map(({ id, name, price, images }) => ({
+      id,
       name,
       price,
-      image: images?.main || "", // Ensure images.main exists
+      images: images || null,
+      image: images?.main || "", // Ensure images.main exists as a convenience field
     }));
   } catch (error) {
     console.error("Error fetching products:", error);
