@@ -4,62 +4,66 @@ import { getOrders, deleteOrder } from "../../services/orderService";
 import * as XLSX from "xlsx"; // Import thư viện xuất Excel
 
 const OrderManagement = () => {
-  const [orders, setOrders] = useState([]);
-  const [showDetails, setShowDetails] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [currentOrderId, setCurrentOrderId] = useState(null);
-  const [productDetails, setProductDetails] = useState(null);
-  useEffect(() => {
-    getOrders()
-      .then((data) => setOrders(data))
-      .catch((error) => console.error("Error fetching orders:", error));
-  }, []);
-  const handleExportExcel = () => {
-    if (orders.length === 0) {
-      alert("No orders to export!");
-      return;
-    }
 
-    // Chuẩn bị dữ liệu Excel
-    const excelData = orders.map((order) => ({
-      "Order ID": order.id,
-      "Customer Name": order.customer.name,
-      Email: order.customer.email,
-      Phone: order.customer.phone,
-      Address: order.customer.address,
-      Total: `${order.total} ${order.currency || "USD"}`,
-      "Payment Method": order.paymentMethod,
-      Status: order.status,
-      Date: new Date(order.date).toLocaleString(),
-      Items: order.items
-        .map(
-          (item) =>
-            `${item.name} (Size: ${item.size}, Color: ${item.color}, Qty: ${item.quantity})`
-        )
-        .join("\n"),
-    }));
+    const [orders, setOrders] = useState([]);
+    const [showDetails, setShowDetails] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); // State để hiển thị Modal xác nhận xóa
+    const [currentOrderId, setCurrentOrderId] = useState(null); // State để lưu id đơn hàng đang được xác nhận xóa
+    const [productDetails, setProductDetails] = useState(null); // State để lưu thông tin chi tiết đơn hàng
+    const [order, setOrder] = useState([]);
+    useEffect(() => {
+        // Lấy đơn hàng từ API khi trang được render
+        getOrders()
+            .then((data) => setOrders(data))
+            .catch((error) => console.error("Error fetching orders:", error));
+    }, []);
+    const handleExportExcel = () => {
+        if (orders.length === 0) {
+            alert("No orders to export!");
+            return;
+        }
+    
+        // Chuẩn bị dữ liệu Excel
+        const excelData = orders.map(order => ({
+            "Order ID": order.id,
+            "Customer Name": order.customer.name,
+            "Email": order.customer.email,
+            "Phone": order.customer.phone,
+            "Address": order.customer.address,
+            "Total": `${order.total} ${order.currency || 'USD'}`,
+            "Payment Method": order.paymentMethod,
+            "Status": order.status,
+            "Date": new Date(order.date).toLocaleString(),
+            "Items": order.items.map(item => `${item.name} (Size: ${item.size}, Color: ${item.color}, Qty: ${item.quantity})`).join("\n")
+        }));
+    
+        // Tạo worksheet từ dữ liệu
+        const ws = XLSX.utils.json_to_sheet(excelData);
+    
+        // Tạo workbook
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Orders");
+    
+        // Xuất file Excel
+        XLSX.writeFile(wb, "Order_List.xlsx");
+    };
+    // Xử lý khi nhấn vào nút xóa
+    const handleDelete = async () => {
+        if (currentOrderId) {
+            try {
+                const result = await deleteOrder(currentOrderId);
+                if (result.success) {
+                    // Xóa đơn hàng khỏi danh sách trong state sau khi xóa thành công
+                    setOrders(orders.filter((order) => order.id !== currentOrderId));
+                    setShowDeleteConfirm(false);  // Đóng modal xác nhận xóa
+                } else {
+                    alert(result.message || "Error deleting order");
+                }
+            } catch (error) {
+                console.error("Error deleting order:", error);
+                alert("Error deleting order");
+            }
 
-    // Tạo worksheet từ dữ liệu
-    const ws = XLSX.utils.json_to_sheet(excelData);
-
-    // Tạo workbook
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Orders");
-
-    // Xuất file Excel
-    XLSX.writeFile(wb, "Order_List.xlsx");
-  };
-  // Xử lý khi nhấn vào nút xóa
-  const handleDelete = async () => {
-    if (currentOrderId) {
-      try {
-        const result = await deleteOrder(currentOrderId);
-        if (result.success) {
-          // Xóa đơn hàng khỏi danh sách trong state sau khi xóa thành công
-          setOrders(orders.filter((order) => order.id !== currentOrderId));
-          setShowDeleteConfirm(false); // Đóng modal xác nhận xóa
-        } else {
-          alert(result.message || "Error deleting order");
         }
       } catch (error) {
         console.error("Error deleting order:", error);

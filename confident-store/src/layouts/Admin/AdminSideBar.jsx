@@ -17,6 +17,11 @@ const AdminSidebar = () => {
       <h2 style={{ color: '#f1f1f1' }}>REPLICA</h2>
       <Nav defaultActiveKey="/home" className="flex-column">
         <NavItem>
+          <NavLink as={Link} to="/admin/dashboard" style={{ color: '#ddd' }}>
+            Dashboard
+          </NavLink>
+        </NavItem>
+        <NavItem>
           <NavLink as={Link} to="/admin/products" style={{ color: '#ddd' }}>
             Manage Products
           </NavLink>
@@ -24,6 +29,11 @@ const AdminSidebar = () => {
         <NavItem>
           <NavLink as={Link} to="/admin/orders" style={{ color: '#ddd' }}>
             Manage Orders
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink as={Link} to="/admin/users" style={{ color: '#ddd' }}>
+            Manage Users
           </NavLink>
         </NavItem>
       </Nav>

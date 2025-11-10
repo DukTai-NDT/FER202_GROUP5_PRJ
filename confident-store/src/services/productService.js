@@ -4,6 +4,10 @@ const API_URL = "http://localhost:9999/products";
 const MAX_PRODUCTS = 6; // Max items to fetch
 const ITEMS_PER_PAGE = 6; // Number of items per page
 
+
+
+
+
 export const getProducts = async (page = 1) => {
   try {
     const response = await axios.get(
@@ -64,5 +68,28 @@ export const deleteProduct = async (id) => {
   } catch (error) {
     console.error("Error deleting product:", error);
     return { success: false, message: "Failed to delete product." };
+  }
+};
+
+
+export const bulkCreateProducts = async (products) => {
+  console.log(`Đang gửi ${products.length} sản phẩm lên json-server...`);
+
+  try {
+    // Tạo một mảng các "lời hứa" (promises), mỗi lời hứa là một request tạo sản phẩm
+    const createPromises = products.map(product => {
+      // Gọi hàm createProduct bạn đã viết
+      return createProduct(product);
+    });
+
+    // Chờ cho TẤT CẢ các request hoàn thành
+    const newProducts = await Promise.all(createPromises);
+
+    console.log("Import hàng loạt thành công!", newProducts);
+    return newProducts; // Trả về mảng các sản phẩm mới đã có ID từ server
+  } catch (error) {
+    console.error("Đã xảy ra lỗi trong quá trình import hàng loạt:", error);
+    // Nếu một request hỏng, Promise.all sẽ thất bại
+    throw new Error("Một hoặc nhiều sản phẩm đã thất bại khi import. Vui lòng kiểm tra console.");
   }
 };
