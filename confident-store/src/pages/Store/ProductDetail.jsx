@@ -75,19 +75,15 @@ const ProductDetail = () => {
         currentCart.push(cartItem); // Thêm sản phẩm mới vào giỏ hàng
       }
 
-      // Lưu giỏ hàng mới vào localStorage
       localStorage.setItem("cart", JSON.stringify(currentCart));
 
-      // Phát sự kiện cập nhật giỏ hàng
       window.dispatchEvent(new Event("cartUpdated"));
 
-      // Hiển thị thông báo thành công
       setNotification({
         message: "Added to cart successfully!",
         variant: "success",
       });
 
-      // Điều hướng sang trang giỏ hàng
       navigate("/cart");
     } else {
       setNotification({
