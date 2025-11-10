@@ -2,7 +2,6 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { FaUser, FaSearch, FaShoppingBasket } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {Button} from 'react-bootstrap'
 const UserHeader = () => {
   const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -68,7 +67,7 @@ const UserHeader = () => {
             {cartCount > 0 && <span style={styles.cartBadge}>{cartCount}</span>}
           </div>
           {currentUser ? (
-            <span style={styles.navLink}><Button onClick={handleLogout} style={{ textDecoration: "none" }} title="Logout" >Logout</Button></span>
+            <span><a href="#" onClick={handleLogout} style={{ textDecoration: "none", color: "#dc3545", fontSize: "14px", fontWeight: "500" }}>Logout</a></span>
           ) : (
 
             <></>
