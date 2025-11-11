@@ -136,7 +136,12 @@ const OrderManagement = () => {
                                             <Card.Body>
                                                 <Card.Title>{item.name}</Card.Title>
                                                 <Card.Text>
-                                                    Size: {item.size}, Color: {item.color} <br />
+                                                    Size: {item.size}, Color: {
+        
+        typeof item.color === 'object' && item.color !== null 
+            ? item.color.name 
+            : item.color
+    } <br />
                                                     Quantity: {item.quantity} <br />
                                                     Price: ${item.price * item.quantity}
                                                 </Card.Text>
