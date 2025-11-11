@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'; // Thêm useEffect
+import React, { useState, useEffect, useRef } from 'react';
 import { Form, Button, InputGroup, Card, Spinner } from 'react-bootstrap';
 import { FaPaperPlane, FaRobot } from 'react-icons/fa';
 // Import các service mới
-import { getChatResponse, getChatHistory, saveChatHistory } from '../../services/AIService'; 
+import { getChatResponse, getChatHistory, saveChatHistory, clearChatHistory } from '../../services/AIService'; 
 
 import ReactMarkdown from 'react-markdown';
 import './AIChat.css'; 
@@ -14,6 +14,9 @@ const AIChat = ({ storeContextData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingHistory, setIsLoadingHistory] = useState(true); // State load lịch sử
 
+  // Ref for chat body to auto-scroll
+  const chatBodyRef = useRef(null);
+
   // --- MỚI: Tải lịch sử chat khi component được mở ---
   useEffect(() => {
     const loadHistory = async () => {
@@ -24,6 +27,20 @@ const AIChat = ({ storeContextData }) => {
     };
     loadHistory();
   }, []); // Chạy 1 lần duy nhất
+
+  // Auto-scroll to bottom when messages change or history loads
+  useEffect(() => {
+    if (chatBodyRef.current) {
+      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+    }
+  }, [messages, isLoadingHistory]);
+  // Clear chat history handler
+  const handleClearHistory = async () => {
+    setIsLoadingHistory(true);
+    await clearChatHistory();
+    setMessages([]);
+    setIsLoadingHistory(false);
+  };
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -64,10 +81,14 @@ const AIChat = ({ storeContextData }) => {
 
   return (
     <Card>
-      <Card.Header><FaRobot /> Trợ lý AI</Card.Header>
-      
-      <Card.Body style={{ height: '400px', overflowY: 'auto' }}>
-        {/* --- MỚI: Thêm spinner khi đang tải lịch sử --- */}
+      <Card.Header className="d-flex justify-content-between align-items-center">
+        <span><FaRobot /> Trợ lý AI</span>
+        <Button variant="outline-danger" size="sm" onClick={handleClearHistory} disabled={isLoadingHistory || isLoading}>
+          Xoá lịch sử chat
+        </Button>
+      </Card.Header>
+
+      <Card.Body style={{ height: '400px', overflowY: 'auto' }} ref={chatBodyRef}>
         {isLoadingHistory ? (
           <div className="text-center">
             <Spinner animation="border" size="sm" />
@@ -76,13 +97,11 @@ const AIChat = ({ storeContextData }) => {
         ) : (
           messages.map((msg, index) => (
             <div key={index} className={`d-flex mb-3 ${msg.role === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
-              {/* Tin nhắn của User */}
               {msg.role === 'user' && (
                 <span className="p-2 rounded bg-primary text-white" style={{ maxWidth: '80%' }}>
                   {msg.parts}
                 </span>
               )}
-              {/* Tin nhắn của Model (AI) */}
               {msg.role === 'model' && (
                 <div className="p-2 rounded bg-light model-response" style={{ maxWidth: '95%' }}>
                   <ReactMarkdown>{msg.parts}</ReactMarkdown>
@@ -91,7 +110,6 @@ const AIChat = ({ storeContextData }) => {
             </div>
           ))
         )}
-        {/* Thêm spinner khi AI đang gõ */}
         {isLoading && <div className="text-center"><Spinner animation="border" size="sm" /></div>}
       </Card.Body>
 
@@ -102,7 +120,7 @@ const AIChat = ({ storeContextData }) => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSend()}
-            disabled={isLoading || isLoadingHistory} // Vô hiệu hóa khi đang tải
+            disabled={isLoading || isLoadingHistory}
           />
           <Button onClick={handleSend} disabled={isLoading || isLoadingHistory}>
             <FaPaperPlane />

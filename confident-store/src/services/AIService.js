@@ -1,3 +1,30 @@
+// // Lấy dữ liệu tổng hợp từ API cho context AI
+// export const fetchStoreContextData = async () => {
+//   try {
+//     const [productsRes, cartRes, ordersRes] = await Promise.all([
+//       axios.get('http://localhost:9999/products'),
+//       axios.get('http://localhost:9999/cart'),
+//       axios.get('http://localhost:9999/orders'),
+//     ]);
+//     return {
+//       products: productsRes.data,
+//       cart: cartRes.data,
+//       orders: ordersRes.data,
+//     };
+//   } catch (error) {
+//     console.error('Lỗi khi lấy dữ liệu context cho AI:', error);
+//     return { products: [], cart: [], orders: [] };
+//   }
+// };
+// Xoá toàn bộ lịch sử chat
+export const clearChatHistory = async () => {
+  try {
+    // Ghi đè object /chatHistory với mảng rỗng
+    await axios.put(`${JSON_SERVER_URL}/chatHistory`, { messages: [] });
+  } catch (error) {
+    console.error("Lỗi khi xoá lịch sử chat:", error);
+  }
+};
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import axios from "axios";
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
@@ -19,21 +46,43 @@ const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
  */
 export const getChatResponse = async (historyFromComponent, newMessage, storeContextData) => {
   try {
-
-
-    let chatHistory = historyFromComponent.slice(0, -1); 
-
+    let chatHistory = historyFromComponent.slice(0, -1);
     if (chatHistory.length > 0 && chatHistory[0].role === 'model') {
       chatHistory = chatHistory.slice(1);
     }
 
+    // Fetch latest products, cart, orders for context
+    let contextData = storeContextData;
+    if (!contextData || !contextData.products || !contextData.cart || !contextData.orders) {
+      // Only fetch if not already provided
+      try {
+        const [productsRes, cartRes, ordersRes] = await Promise.all([
+          axios.get('http://localhost:9999/products'),
+          axios.get('http://localhost:9999/cart'),
+          axios.get('http://localhost:9999/orders'),
+        ]);
+        contextData = {
+          products: productsRes.data,
+          cart: cartRes.data,
+          orders: ordersRes.data,
+        };
+      } catch (fetchErr) {
+        contextData = { products: [], cart: [], orders: [] };
+      }
+    }
+
+    // Inject current date
+    const today = new Date();
+    const todayISO = today.toISOString().slice(0, 10); // yyyy-mm-dd
+    const todayVN = today.toLocaleDateString('vi-VN'); // dd/mm/yyyy
 
     const contextPrompt = `
       ---
       **BỐI CẢNH (CONTEXT):**
-      Bạn là trợ lý AI quản lý của một cửa hàng. 
+      Bạn là trợ lý AI quản lý của một cửa hàng.
+      Hôm nay là ngày: ${todayVN} (ISO: ${todayISO})
       Nhiệm vụ của bạn là trả lời câu hỏi DỰA TRÊN DỮ LIỆU CỬA HÀNG được cung cấp dưới đây.
-      
+
       **QUY TẮC BẮT BUỘC:**
       1.  **ƯU TIÊN TUYỆT ĐỐI** dữ liệu được cung cấp.
       2.  Nếu câu hỏi có thể được trả lời bằng dữ liệu, hãy trích xuất và trả lời.
@@ -42,7 +91,7 @@ export const getChatResponse = async (historyFromComponent, newMessage, storeCon
 
       **DỮ LIỆU CỬA HÀNG HIỆN TẠI:**
       \`\`\`json
-      ${JSON.stringify(storeContextData, null, 2)}
+      ${JSON.stringify(contextData, null, 2)}
       \`\`\`
       ---
     `;
@@ -55,18 +104,16 @@ export const getChatResponse = async (historyFromComponent, newMessage, storeCon
       **CÂU HỎI CỦA NGƯỜI DÙNG:**
       ${newMessage}
     `;
-    
+
     // 3. Gửi tin nhắn đã gộp
     const chat = model.startChat({ history: chatHistory });
-
-    const result = await chat.sendMessage(messageWithContext); 
+    const result = await chat.sendMessage(messageWithContext);
     const response = await result.response;
     return response.text();
-
   } catch (error) {
     console.error("Lỗi khi gọi API chat:", error);
     // Thêm log chi tiết để debug nếu vẫn lỗi
-    console.error("Lịch sử đã gửi (sau khi sửa):", chatHistory);
+    // console.error("Lịch sử đã gửi (sau khi sửa):", chatHistory); // chatHistory có thể không tồn tại nếu lỗi sớm
     console.error("Tin nhắn mới:", newMessage);
     return "Đã xảy ra lỗi, không thể kết nối với AI. (Chi tiết trong console)";
   }

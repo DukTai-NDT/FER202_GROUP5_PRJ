@@ -223,7 +223,6 @@ const AdminPage = () => {
         {/* CẬP NHẬT DÒNG TIÊU ĐỀ ĐỂ THÊM NÚT */}
         <Col className="d-flex justify-content-between align-items-center">
           <div>
-            <h2>Trang chủ Admin</h2>
             <p>Chào mừng trở lại!</p>
           </div>
           
